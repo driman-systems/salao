@@ -1,4 +1,7 @@
 import './globals.css';
+import { Jost } from "next/font/google";
+
+const jost  = Jost({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'Amanda Moura Nail Designer',
@@ -7,13 +10,22 @@ export const metadata = {
     with: "device-width",
     initialScale: 1,
     maximumScale: 1
-  }
+  },
+  icons: {
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/icon.png',
+    other: {
+      rel: 'apple-touch-icon-precomposed',
+      url: '/icon.png',
+    },
+  },
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
-      <body className="">{children}</body>
+      <body className={jost.className}>{children}</body>
     </html>
   )
 }

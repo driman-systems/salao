@@ -21,8 +21,8 @@ export const metadata = {
       url: '/icon.png',
     },
     themeColor: [
-      { media: '(prefers-color-scheme: light)', color: '#ffb5cc' },
-      { media: '(prefers-color-scheme: dark)', color: '#ffb5cc' },
+      { media: '(prefers-color-scheme: light)', color: '#f0d4dd' },
+      { media: '(prefers-color-scheme: dark)', color: '#f0d4dd' },
     ],
   },
 }

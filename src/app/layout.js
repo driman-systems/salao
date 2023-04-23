@@ -20,6 +20,10 @@ export const metadata = {
       rel: 'apple-touch-icon-precomposed',
       url: '/icon.png',
     },
+    themeColor: [
+      { media: '(prefers-color-scheme: light)', color: '#ffb5cc' },
+      { media: '(prefers-color-scheme: dark)', color: '#ffb5cc' },
+    ],
   },
 }
 

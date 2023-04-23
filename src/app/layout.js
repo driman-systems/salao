@@ -1,3 +1,4 @@
+import Header from '@/components/Header';
 import './globals.css';
 import { Jost } from "next/font/google";
 
@@ -25,7 +26,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
-      <body className={jost.className}>{children}</body>
+      <body className={jost.className}>
+      <Header />
+      <div className='w-full max-w-6xl m-auto px-2 lg:px-0'>
+      {children}
+      </div>
+      </body>
     </html>
   )
 }

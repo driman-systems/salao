@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR">
       <body className={jost.className}>
       <Header />
-      <div className='w-full max-w-6xl m-auto px-2 lg:px-0'>
+      <div className='w-full max-w-7xl m-auto px-2 lg:px-0'>
       {children}
       </div>
       </body>

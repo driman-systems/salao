@@ -18,7 +18,7 @@ const router = useRouter();
               <Link className="text-white" href="/servicos">Servicos</Link>
               <Link className="text-white items-center" href="/login">Entrar <FaSignOutAlt className="inline" /></Link>
             </nav>
-            <RiMenuUnfoldLine className="lg:hidden text-4xl me-3 text-[#A82D54]" />
+            <RiMenuUnfoldLine className="lg:hidden text-4xl me-3 text-white" />
       </div>
     </header>
   )

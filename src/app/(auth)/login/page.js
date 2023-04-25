@@ -9,7 +9,7 @@ const Login = () => {
       <section class="bg-gray-50">
         <div class="flex flex-col h-screen items-center justify-center px-6 py-8 mx-auto lg:py-0">
             <a href="#" class="flex items-center mb-6">
-                <Image class="mr-1" src="/logo-amanda-dark.png" alt="logo" width={250} height={72} />  
+                <Image class="mr-1" src="/logo-amanda-dark.svg" alt="logo" width={250} height={72} />  
             </a>
             <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">

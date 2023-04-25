@@ -13,17 +13,13 @@ export const metadata = {
     maximumScale: 1
   },
   icons: {
-    icon: '/icon.png',
-    shortcut: '/icon.png',
-    apple: '/icon.png',
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
     other: {
       rel: 'apple-touch-icon-precomposed',
       url: '/icon.png',
     },
-    themeColor: [
-      { media: '(prefers-color-scheme: light)', color: '#f0d4dd' },
-      { media: '(prefers-color-scheme: dark)', color: '#f0d4dd' },
-    ],
   },
 }
 

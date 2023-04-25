@@ -11,7 +11,7 @@ const router = useRouter();
 
   return (
     <header className="flex border-b-2 border-gray-100 shadow-sm shadow-gray-100 bg-[#A82D54]">
-      <div className="flex w-full max-w-7xl m-auto py-3 px-3 xl:px-0 justify-between items-center">
+      <div className="flex w-full max-w-6xl m-auto py-3 px-3 xl:px-0 justify-between items-center">
             <Image onClick={()=> router.push("/")} className="cursor-pointer max-w-[150px] h-auto" src="/logo-amanda-bnc.png" alt="Amanda Moura Nail Design" width={180} height={50} />
             <nav className="space-x-6 hidden lg:inline">
               <Link className="text-white" href="/sobre">Sobre</Link>

@@ -1,3 +1,7 @@
+import { Jost } from "next/font/google";
+
+const jost  = Jost({ subsets: ['latin'] });
+
 export const metadata = {
   title: 'Nail Designer | Login',
   description: 'Faça login para fazer seu agendamento',
@@ -20,7 +24,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
  return (
     <html lang="pt-BR">
-      <body>{children}</body>
+      <body className={jost.className}>{children}</body>
     </html>
   )
 }

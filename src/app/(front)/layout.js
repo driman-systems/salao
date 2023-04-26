@@ -25,7 +25,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className='disable-select'>
       <body className={jost.className}>
       <Header />
       <div className='w-full max-w-6xl m-auto px-2 xl:px-0'>

@@ -6,28 +6,44 @@ import Image from "next/image";
 const Cadastrar = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    name: "",
-    phone: "",
-    birthdate: "",
-    street: "",
-    number: "",
-    neighborhood: "",
-    city: "",
-    zipcode: "",
+    email: '',
+  password: '',
+  confirmPassword: '',
+  name: '',
+  phone: '',
+  birthdate: '',
+  city: '',
+  emailError: '',
+  passwordError: '',
+  confirmPasswordError: '',
+  nameError: '',
+  phoneError: '',
+  birthdateError: '',
+  cityError: '',
   });
 
+  const formatPhone = (input) => {
+    const value = input.replace(/\D/g, "");
+    const formattedValue = value
+      .replace(/^(\d{2})(\d)/g, "($1) $2")
+      .replace(/(\d{5})(\d)/, "$1-$2");
+    return formattedValue;
+  };
+ 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+  
+    if (name === "phone") {
+      setFormData({ ...formData, [name]: formatPhone(value) });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleNextStep = (e) => {
     e.preventDefault();
     if (validateFields()) {
       setStep((prevStep) => prevStep + 1);
-    } else {
-      alert('Por favor, preencha todos os campos antes de prosseguir.');
     }
   };
   
@@ -46,32 +62,80 @@ const Cadastrar = () => {
     const phoneRegex = /^\(?([0-9]{2})\)?[-.\s]?([0-9]{4,5})[-.\s]?([0-9]{4})$/;
     return phoneRegex.test(phone);
   };
-  
-  const isValidZipcode = (zipcode) => {
-    const zipcodeRegex = /^[0-9]{5}-[0-9]{3}$/;
-    return zipcodeRegex.test(zipcode);
-  };
 
   const validateFields = () => {
-    switch (step) {
-      case 1:
-        return formData.email !== '' && isValidEmail(formData.email) && formData.password !== '' && formData.confirmPassword !== '';
-      case 2:
-        return formData.name !== '' && formData.phone !== '' && isValidPhone(formData.phone) && formData.birthdate !== '';
-      case 3:
-        return formData.street !== '' && formData.number !== '' && formData.neighborhood !== '' && formData.city !== '' && formData.zipcode !== '' && isValidZipcode(formData.zipcode);
-      default:
-        return false;
+    let isValid = true;
+  
+    // Etapa 1
+    if (step === 1) {
+      // Validação de e-mail
+      if (formData.email === '' || !isValidEmail(formData.email)) {
+        setFormData((prevData) => ({ ...prevData, emailError: 'Por favor, insira um e-mail válido.' }));
+        isValid = false;
+      } else {
+        setFormData((prevData) => ({ ...prevData, emailError: '' }));
+      }
+  
+      // Validação de senha
+      if (formData.password === '') {
+        setFormData((prevData) => ({ ...prevData, passwordError: 'Por favor, insira uma senha.' }));
+        isValid = false;
+      } else {
+        setFormData((prevData) => ({ ...prevData, passwordError: '' }));
+      }
+  
+      // Validação de confirmação de senha
+      if (formData.confirmPassword === '' || formData.password !== formData.confirmPassword) {
+        setFormData((prevData) => ({ ...prevData, confirmPasswordError: 'As senhas não coincidem.' }));
+        isValid = false;
+      } else {
+        setFormData((prevData) => ({ ...prevData, confirmPasswordError: '' }));
+      }
     }
+  
+    // Etapa 2
+    if (step === 2) {
+      // Validação do nome
+      if (formData.name === '') {
+        setFormData((prevData) => ({ ...prevData, nameError: 'Por favor, insira seu nome completo.' }));
+        isValid = false;
+      } else {
+        setFormData((prevData) => ({ ...prevData, nameError: '' }));
+      }
+  
+      // Validação do telefone
+      if (formData.phone === '' || !isValidPhone(formData.phone)) {
+        setFormData((prevData) => ({ ...prevData, phoneError: 'Por favor, insira um número de telefone válido.' }));
+        isValid = false;
+      } else {
+        setFormData((prevData) => ({ ...prevData, phoneError: '' }));
+      }
+  
+      // Validação da data de nascimento
+      if (formData.birthdate === '') {
+        setFormData((prevData) => ({ ...prevData, birthdateError: 'Por favor, insira sua data de nascimento.' }));
+        isValid = false;
+      } else {
+        setFormData((prevData) => ({ ...prevData, birthdateError: '' }));
+      }
+  
+      // Validação da cidade
+      if (formData.city === '') {
+        setFormData((prevData) => ({ ...prevData, cityError: 'Por favor, insira sua cidade.' }));
+        isValid = false;
+      } else {
+        setFormData((prevData) => ({ ...prevData, cityError: '' }));
+      }
+    }
+  
+    return isValid;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateFields()) {
-      // Lógica de envio do formulário
+      alert("Cadastro enviado");
       console.log('Formulário enviado com sucesso:', formData);
-    } else {
-      alert('Por favor, preencha todos os campos antes de prosseguir.');
     }
   };
   
@@ -102,6 +166,7 @@ const Cadastrar = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                         placeholder="email@email.com"
                       />
+                      {formData.emailError && <p className="mt-1 text-sm text-red-600">{formData.emailError}</p>}
                     </div>
                     <div>
                       <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Senha</label>
@@ -114,6 +179,22 @@ const Cadastrar = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                         placeholder="••••••••"
                       />
+                      {formData.passwordError && <p className="mt-1 text-sm text-red-600">{formData.passwordError}</p>}
+
+                    </div>
+                    <div>
+                      <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-gray-900">Confirmar senha</label>
+                      <input
+                        type="password"
+                        name="confirmPassword"
+                        id="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleInputChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        placeholder="••••••••"
+                      />
+                      {formData.confirmPasswordError && <p className="mt-1 text-sm text-red-600">{formData.confirmPasswordError}</p>}
+
                     </div>
                     <button onClick={handleNextStep} className="w-full text-white bg-[#A82D54] hover:brightness-105 focus:outline-none focus:shadow-none font-medium rounded-md text-sm px-5 py-2.5 text-center">
                       Próximo
@@ -134,11 +215,13 @@ const Cadastrar = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                         placeholder="Seu nome completo"
                       />
+                      {formData.nameError && <p className="mt-1 text-sm text-red-600">{formData.nameError}</p>}
                     </div>
+
                     <div>
                       <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900">Telefone</label>
                       <input
-                        type="tel"
+                        type="text"
                         name="phone"
                         id="phone"
                         value={formData.phone}
@@ -146,6 +229,7 @@ const Cadastrar = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                         placeholder="(99) 99999-9999"
                       />
+                      {formData.phoneError && <p className="mt-1 text-sm text-red-600">{formData.phoneError}</p>}
                     </div>
                     <div>
                       <label htmlFor="birthdate" className="block mb-2 text-sm font-medium text-gray-900">Data de nascimento</label>
@@ -157,55 +241,7 @@ const Cadastrar = () => {
                         onChange={handleInputChange}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                       />
-                    </div>
-                    <div className="flex space-x-4">
-                      <button onClick={handlePrevStep} className="w-full text-gray-900 bg-gray-200 hover:brightness-95 focus:outline-none focus:shadow-none font-medium rounded-md text-sm px-5 py-2.5 text-center">
-                        Anterior
-                      </button>
-                      <button onClick={handleNextStep} className="w-full text-white bg-[#A82D54] hover:brightness-105 focus:outline-none focus:shadow-none font-medium rounded-md text-sm px-5 py-2.5 text-center">
-                        Próximo
-                      </button>
-                    </div>
-                  </>
-                )}
-
-                {step === 3 && (
-                  <>
-                    <div>
-                      <label htmlFor="street" className="block mb-2 text-sm font-medium text-gray-900">Rua</label>
-                      <input
-                        type="text"
-                        name="street"
-                        id="street"
-                        value={formData.street}
-                        onChange={handleInputChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        placeholder="Rua Exemplo"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="number" className="block mb-2 text-sm font-medium text-gray-900">Número</label>
-                      <input
-                        type="text"
-                        name="number"
-                        id="number"
-                        value={formData.number}
-                        onChange={handleInputChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        placeholder="123"
-                      />
-                    </div>
-                    <div>
-                    <label htmlFor="neighborhood" className="block mb-2 text-sm font-medium text-gray-900">Bairro</label>
-                      <input
-                        type="text"
-                        name="neighborhood"
-                        id="neighborhood"
-                        value={formData.neighborhood}
-                        onChange={handleInputChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        placeholder="Bairro Exemplo"
-                      />
+                      {formData.birthdateError && <p className="mt-1 text-sm text-red-600">{formData.birthdateError}</p>}
                     </div>
                     <div>
                       <label htmlFor="city" className="block mb-2 text-sm font-medium text-gray-900">Cidade</label>
@@ -218,18 +254,7 @@ const Cadastrar = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                         placeholder="Cidade Exemplo"
                       />
-                    </div>
-                    <div>
-                      <label htmlFor="zipcode" className="block mb-2 text-sm font-medium text-gray-900">CEP</label>
-                      <input
-                        type="text"
-                        name="zipcode"
-                        id="zipcode"
-                        value={formData.zipcode}
-                        onChange={handleInputChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        placeholder="99999-999"
-                      />
+                      {formData.cityError && <p className="mt-1 text-sm text-red-600">{formData.cityError}</p>}
                     </div>
                     <div className="flex space-x-4">
                       <button onClick={handlePrevStep} className="w-full text-gray-900 bg-gray-200 hover:brightness-95 focus:outline-none focus:shadow-none font-medium rounded-md text-sm px-5 py-2.5 text-center">

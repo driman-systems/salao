@@ -24,18 +24,57 @@ const Cadastrar = () => {
 
   const handleNextStep = (e) => {
     e.preventDefault();
-    setStep(step + 1);
+    if (validateFields()) {
+      setStep((prevStep) => prevStep + 1);
+    } else {
+      alert('Por favor, preencha todos os campos antes de prosseguir.');
+    }
   };
+  
 
   const handlePrevStep = (e) => {
     e.preventDefault();
     setStep(step - 1);
   };
 
-  const handleSignup = (e) => {
-    e.preventDefault();
-    // Implemente a lógica de cadastro aqui
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
+  
+  const isValidPhone = (phone) => {
+    const phoneRegex = /^\(?([0-9]{2})\)?[-.\s]?([0-9]{4,5})[-.\s]?([0-9]{4})$/;
+    return phoneRegex.test(phone);
+  };
+  
+  const isValidZipcode = (zipcode) => {
+    const zipcodeRegex = /^[0-9]{5}-[0-9]{3}$/;
+    return zipcodeRegex.test(zipcode);
+  };
+
+  const validateFields = () => {
+    switch (step) {
+      case 1:
+        return formData.email !== '' && isValidEmail(formData.email) && formData.password !== '' && formData.confirmPassword !== '';
+      case 2:
+        return formData.name !== '' && formData.phone !== '' && isValidPhone(formData.phone) && formData.birthdate !== '';
+      case 3:
+        return formData.street !== '' && formData.number !== '' && formData.neighborhood !== '' && formData.city !== '' && formData.zipcode !== '' && isValidZipcode(formData.zipcode);
+      default:
+        return false;
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateFields()) {
+      // Lógica de envio do formulário
+      console.log('Formulário enviado com sucesso:', formData);
+    } else {
+      alert('Por favor, preencha todos os campos antes de prosseguir.');
+    }
+  };
+  
 
   return (
     <div>
@@ -49,7 +88,7 @@ const Cadastrar = () => {
               <h1 className="text-md font-bold leading-tight tracking-tight text-[#A82D54] md:text-2xl">
                 Cadastro
               </h1>
-              <form className="space-y-4 md:space-y-6" onSubmit={handleSignup}>
+              <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                 {step === 1 && (
                   <>
                     <div>

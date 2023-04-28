@@ -199,6 +199,9 @@ const Cadastrar = () => {
                     <button onClick={handleNextStep} className="w-full text-white bg-[#A82D54] hover:brightness-105 focus:outline-none focus:shadow-none font-medium rounded-md text-sm px-5 py-2.5 text-center">
                       Próximo
                     </button>
+                    <p className="text-sm font-light text-gray-500 text-center">
+                            Já tem conta? <a href="/login" className="font-medium text-[#A82D54] hover:underline">Entrar</a>
+                        </p>
                   </>
                 )}
 

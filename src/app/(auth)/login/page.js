@@ -54,7 +54,7 @@ const Login = () => {
                           Entrar
                         </button>
                         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                            Não tem conta? <a href="#" className="font-medium text-[#A82D54] hover:underline">Crie uma</a>
+                            Não tem conta? <a href="/cadastro" className="font-medium text-[#A82D54] hover:underline">Crie uma</a>
                         </p>
                     </form>
                     <button type="submit" 

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import "./style.css";
+import "../style.css";
 import Image from "next/image";
 
 const Login = () => {
@@ -61,7 +61,7 @@ const Login = () => {
                         className="w-full flex flex-row space-x-3 justify-center items-center  text-gray-400 bg-gray-50 hover:brightness-95 focus:outline-none focus:shadow-none
                        font-medium rounded-md text-sm px-5 py-4 text-center">
                         <Image src="/google-icon.svg" alt="Google" width={25} height={25} />
-                        <div>Entrar com o Google</div>
+                        <span>Entrar com o Google</span>
                         </button>
                 </div>
             </div>

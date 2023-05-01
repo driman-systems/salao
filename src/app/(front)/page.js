@@ -1,7 +1,10 @@
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Carousel } from 'react-responsive-carousel';
+
 export default function Home() {
   return (
-    <main className="">
-      <h1>Home</h1>
-    </main>
+    <div className="container mx-auto mt-10">
+      
+    </div>
   )
 }

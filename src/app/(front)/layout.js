@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR" className='disable-select'>
       <body className={jost.className}>
       <Header />
-      <div className='w-full max-w-6xl m-auto px-2 xl:px-0'>
+      <div className='w-full m-auto xl:px-0'>
       {children}
       </div>
       </body>

@@ -23,7 +23,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex flex-col lg:flex-row border-b-2 border-gray-100 shadow-sm bg-[#A82D54]">
+    <header className="flex flex-col lg:flex-row bg-[#A82D54]">
       <div className="flex w-full max-w-6xl m-auto py-3 px-3 xl:px-0 justify-between items-center">
         <div onClick={navigateToHome} className="cursor-pointer">
           <Image className="max-w-[150px] h-auto" src="/logo-amanda-bnc.svg" alt="Amanda Moura Nail Design" width={180} height={50} />

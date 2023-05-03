@@ -144,12 +144,12 @@ const Cadastrar = () => {
     <div>
       <section className="bg-gray-50">
         <div className="flex flex-col h-screen items-center justify-center px-6 py-8 mx-auto lg:py-0">
-          <a href="/" className="flex items-center mb-6">
-            <Image className="mr-1" src="/logo-amanda-dark.svg" alt="logo" width={250} height={72} />
+          <a href="/" className="flex items-center mb-1">
+            <Image className="max-w-[250px]" src="/logo-amanda-bk.svg" alt="logo" width={800} height={400} />
           </a>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-md font-bold leading-tight tracking-tight text-[#A82D54] md:text-2xl">
+              <h1 className="text-md font-bold leading-tight tracking-tight text-[#AF1B51] md:text-2xl">
                 Cadastro
               </h1>
               <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
@@ -196,11 +196,11 @@ const Cadastrar = () => {
                       {formData.confirmPasswordError && <p className="mt-1 text-sm text-red-600">{formData.confirmPasswordError}</p>}
 
                     </div>
-                    <button onClick={handleNextStep} className="w-full text-white bg-[#A82D54] hover:brightness-105 focus:outline-none focus:shadow-none font-medium rounded-md text-sm px-5 py-2.5 text-center">
+                    <button onClick={handleNextStep} className="w-full text-white bg-[#AF1B51] hover:brightness-105 focus:outline-none focus:shadow-none font-medium rounded-md text-sm px-5 py-2.5 text-center">
                       Próximo
                     </button>
                     <p className="text-sm font-light text-gray-500 text-center">
-                            Já tem conta? <a href="/login" className="font-medium text-[#A82D54] hover:underline">Entrar</a>
+                            Já tem conta? <a href="/login" className="font-medium text-[#AF1B51] hover:underline">Entrar</a>
                         </p>
                   </>
                 )}
@@ -263,7 +263,7 @@ const Cadastrar = () => {
                       <button onClick={handlePrevStep} className="w-full text-gray-900 bg-gray-200 hover:brightness-95 focus:outline-none focus:shadow-none font-medium rounded-md text-sm px-5 py-2.5 text-center">
                         Anterior
                       </button>
-                      <button type="submit" className="w-full text-white bg-[#A82D54] hover:brightness-105 focus:outline-none focus:shadow-none font-medium rounded-md text-sm px-5 py-2.5 text-center">
+                      <button type="submit" className="w-full text-white bg-[#AF1B51] hover:brightness-105 focus:outline-none focus:shadow-none font-medium rounded-md text-sm px-5 py-2.5 text-center">
                         Cadastrar
                       </button>
                     </div>

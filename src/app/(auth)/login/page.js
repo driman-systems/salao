@@ -14,12 +14,12 @@ const Login = () => {
     <div>
       <section className="bg-gray-50">
         <div className="flex flex-col h-screen items-center justify-center px-6 py-8 mx-auto lg:py-0">
-            <a href="/" className="flex items-center mb-6">
-                <Image className="mr-1" src="/logo-amanda-dark.svg" alt="logo" width={250} height={72} />  
+            <a href="/" className="flex items-center mb-1">
+                <Image className="max-w-[250px]" src="/logo-amanda-bk.svg" alt="logo" width={800} height={400} />  
             </a>
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <h1 className="text-xl font-bold leading-tight tracking-tight text-[#A82D54] md:text-2xl">
+                    <h1 className="text-xl font-bold leading-tight tracking-tight text-[#AF1B51] md:text-2xl">
                         Entrar
                     </h1>
                     <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
@@ -40,7 +40,7 @@ const Login = () => {
                         <div className="flex items-center justify-between">
                             <div className="flex items-start">
                                 <div className="flex items-center h-5">
-                                  <input id="remember" aria-describedby="remember" type="checkbox" className="accent-[#A82D54] w-4 h-4" />
+                                  <input id="remember" aria-describedby="remember" type="checkbox" className="accent-[#AF1B51] w-4 h-4" />
                                 </div>
                                 <div className="ml-3 text-sm">
                                   <label htmlFor="remember" className="text-gray-500">Lembrar</label>
@@ -49,12 +49,12 @@ const Login = () => {
                             <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Esqueceu a senha?</a>
                         </div>
                         <button type="submit" 
-                        className="w-full text-white bg-[#A82D54] hover:brightness-105 focus:outline-none focus:shadow-none
+                        className="w-full text-white bg-[#AF1B51] hover:brightness-105 focus:outline-none focus:shadow-none
                        font-medium rounded-md text-sm px-5 py-2.5 text-center">
                           Entrar
                         </button>
                         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                            Não tem conta? <a href="/cadastro" className="font-medium text-[#A82D54] hover:underline">Crie uma</a>
+                            Não tem conta? <a href="/cadastro" className="font-medium text-[#AF1B51] hover:underline">Crie uma</a>
                         </p>
                     </form>
                     <button type="submit" 

@@ -29,21 +29,21 @@ const Carousel = () => {
 
   return (
     <div ref={containerRef} className={styles.imageContainer}>
-               <Image src="/carousel/foto1.jpg" alt="Unha 1" width={300} height={300} />
+               <Image src="/carousel/foto1.jpg" alt="Unha 1" width={400} height={400} />
         
-                  <Image src="/carousel/foto2.jpg" alt="Unha 2" width={300} height={300} />
+                  <Image src="/carousel/foto2.jpg" alt="Unha 2" width={400} height={400} />
         
-                  <Image src="/carousel/foto3.jpg" alt="Unha 3" width={300} height={300} />
+                  <Image src="/carousel/foto3.jpg" alt="Unha 3" width={400} height={400} />
         
-                  <Image src="/carousel/foto4.jpg" alt="Unha 4" width={300} height={300} />
+                  <Image src="/carousel/foto4.jpg" alt="Unha 4" width={400} height={400} />
         
-                  <Image src="/carousel/foto5.jpg" alt="Unha 5" width={300} height={300} />
+                  <Image src="/carousel/foto5.jpg" alt="Unha 5" width={400} height={400} />
         
-                  <Image src="/carousel/foto6.jpg" alt="Unha 6" width={300} height={300} />
+                  <Image src="/carousel/foto6.jpg" alt="Unha 6" width={400} height={400} />
         
-                  <Image src="/carousel/foto7.jpg" alt="Unha 7" width={300} height={300} />
+                  <Image src="/carousel/foto7.jpg" alt="Unha 7" width={400} height={400} />
         
-                  <Image src="/carousel/foto8.jpg" alt="Unha 8" width={300} height={300} />
+                  <Image src="/carousel/foto8.jpg" alt="Unha 8" width={400} height={400} />
         
     </div>
   );

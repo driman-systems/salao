@@ -9,6 +9,7 @@ const jost  = Jost({ subsets: ['latin'] });
 export const metadata = {
   title: 'Amanda Moura Nail Designer',
   description: 'Unhas incríveis',
+  themeColor:  '#AF1B51',
   viewport: {
     with: "device-width",
     initialScale: 1,

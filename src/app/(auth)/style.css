@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.disable-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@media print {
+  body {
+    display: none;
+  }
+}
+
+/* Personaliza o scrollbar */
+::-webkit-scrollbar {
+  width: 5px; /* Define a largura do scrollbar */
+}
+
+/* Define a cor do fundo do scrollbar */
+::-webkit-scrollbar-track {
+  background-color: #F5F5F5; /* Cor de fundo neutra */
+}
+
+/* Define a cor do "handle" (barra deslizante) do scrollbar */
+::-webkit-scrollbar-thumb {
+  background-color: #AF1B51; /* Cor principal */
+  border-radius: 10px; /* Bordas arredondadas */
+}
+
+/* Cor do "handle" (barra deslizante) do scrollbar ao passar o mouse */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #D14C6D; /* Cor secundária */
+}

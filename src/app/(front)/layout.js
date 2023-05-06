@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
 import './globals.css';
 import { Jost } from "next/font/google";
+import Footer from '@/components/Footer';
 
 const jost  = Jost({ subsets: ['latin'] });
 
@@ -28,9 +29,10 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR" className='disable-select'>
       <body className={jost.className}>
       <Header />
-      <div className='w-full m-auto xl:px-0'>
+      <div className='w-full m-auto xl:px-0 min-h-[70vh]'>
       {children}
       </div>
+      <Footer />
       </body>
     </html>
   )

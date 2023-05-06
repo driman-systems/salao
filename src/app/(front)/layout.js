@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR" className='disable-select'>
       <body className={jost.className}>
       <Header />
-      <div className='w-full m-auto xl:px-0 min-h-[70vh]'>
+      <div className='w-full m-auto xl:px-0 min-h-[50vh]'>
       {children}
       </div>
       <Footer />

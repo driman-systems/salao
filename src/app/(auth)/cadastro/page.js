@@ -149,7 +149,7 @@ const Cadastrar = () => {
             <Image className="max-w-[250px]" src="/logo-amanda-bk.svg" alt="logo" width={800} height={400} />
           </a>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <div className="p-6 space-y-4 md:space-y-3 sm:p-8">
               <h1 className="text-md font-bold leading-tight tracking-tight text-[#AF1B51] md:text-2xl">
                 Cadastro
               </h1>

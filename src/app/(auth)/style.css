@@ -35,3 +35,16 @@
 ::-webkit-scrollbar-thumb:hover {
   background-color: #D14C6D; /* Cor secundária */
 }
+  .small-placeholder::placeholder {
+    font-size: 0.6rem; /* Ajuste o valor de acordo com sua preferência */
+  }
+
+  .input-with-requirements {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-with-requirements:focus-within .password-requirements {
+  display: block;
+}

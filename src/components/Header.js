@@ -26,11 +26,11 @@ const Header = () => {
     <header className="flex flex-col lg:flex-row bg-[#AF1B51]">
       <div className="flex w-full max-w-6xl m-auto py-1 px-3 xl:px-0 justify-between items-center">
         <div onClick={navigateToHome} className="cursor-pointer">
-          <Image className="max-w-[250px] h-auto" src="/logo-amanda-bc.svg" alt="Amanda Moura Nail Design" width={700} height={400} />
+          <Image className="max-w-[250px] h-auto" src="/logo-amanda-bc.svg" alt="Amanda Moura Nail Design" width={700} height={400} priority={true} />
         </div>
         <nav className={`hidden lg:flex space-x-5 text-lg`}>
-          <Link href="/sobre">
-            <span className="text-white hover:brightness-125">Sobre</span>
+          <Link href="/agenda">
+            <span className="text-white hover:brightness-125">Agende seu horário</span>
           </Link>
           <Link href="/servicos">
             <span className="text-white hover:brightness-125">Servicos</span>
@@ -43,8 +43,8 @@ const Header = () => {
       </div>
       <nav className={`w-full overflow-hidden transition-all duration-300 ease-in-out h-auto ${menuOpen ? 'max-h-48' : 'max-h-0'} text-2xl lg:hidden`}>
         <div className="flex flex-col items-center pb-1">
-          <Link href="/sobre" className='w-full border-t-2 border-white border-opacity-10 py-2 text-center'>
-            <span className="text-white hover:brightness-125" onClick={closeMenu}>Sobre</span>
+          <Link href="/agenda" className='w-full border-t-2 border-white border-opacity-10 py-2 text-center'>
+            <span className="text-white hover:brightness-125" onClick={closeMenu}>Agende seu horário</span>
           </Link>
           <Link href="/servicos" className='w-full border-t-2 border-white border-opacity-10 py-2 text-center'>
             <span className="text-white hover:brightness-125" onClick={closeMenu}>Servicos</span>

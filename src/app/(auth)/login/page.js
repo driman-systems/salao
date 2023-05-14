@@ -3,12 +3,14 @@ import "../style.css";
 import React, { useState } from "react";
 import Image from "next/image";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, 
+  sendPasswordResetEmail, fetchSignInMethodsForEmail } from "firebase/auth";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { auth, firestore, provider } from "@/config/Firebase";
 import Footer from "@/components/Footer";
 import { stringify } from 'querystring';
+import ForgotPasswordModal from "@/components/ForgotPasswordModal";
 
 const Login = () => {
 
@@ -19,6 +21,7 @@ const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ email: null, password: null });
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
 
   const handleLogin = async (email, password) => {
     setLoading(true);
@@ -61,6 +64,30 @@ const Login = () => {
     }
   };
 
+  const firebaseErrorToPortuguese = (errorCode) => {
+    const errorMessages = {
+      "auth/user-not-found": "Usuário não encontrado.",
+      "auth/invalid-email": "E-mail inválido.",
+    };
+  
+    return errorMessages[errorCode] || "Ocorreu um erro desconhecido.";
+  };
+
+  const handleForgotPassword = async (email) => {
+    try {
+      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+      if (signInMethods.includes("google.com")) {
+        return Promise.reject(
+          new Error("Este e-mail não pode redefinir a senha, pois foi cadastrado usando o Google.")
+        );
+      }
+      await sendPasswordResetEmail(auth, email);
+    } catch (error) {
+      const errorMessage = firebaseErrorToPortuguese(error.code);
+      return Promise.reject(new Error(errorMessage));
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -98,6 +125,11 @@ const handleGoogleSignIn = async () => {
 
   return (
     <div>
+        <ForgotPasswordModal
+          show={showForgotPasswordModal}
+          onClose={() => setShowForgotPasswordModal(false)}
+          onSubmit={handleForgotPassword}
+        />
       <section className="bg-gray-50">
         <div className="flex flex-col h-screen items-center justify-center px-6 py-3 mx-auto lg:py-0">
           <a href="/" className="mb-2">
@@ -151,19 +183,14 @@ const handleGoogleSignIn = async () => {
                 )}
                                        
                 <div className="flex items-center justify-between">
-                  <div className="flex items-start">
-                    <div className="flex items-center h-5">
-                      <input id="remember" aria-describedby="remember" type="checkbox" className="accent-[#AF1B51] w-4 h-4" />
-                    </div>
-                    <div className="ml-3 text-sm">
-                      <label htmlFor="remember" className="text-gray-500">Lembrar</label>
-                      </div>
-                  </div>
-                  <div className="text-sm">
-                    <a href="#" className="font-medium text-[#AF1B51] hover:text-[#AF1B51]">
-                      Esqueceu sua senha?
-                    </a>
-                  </div>
+                <div className="text-sm">
+                  <button type="button"
+                    className="font-medium text-[#AF1B51] hover:text-[#AF1B51] w-full text-right"
+                    onClick={() => setShowForgotPasswordModal(true)}
+                  >
+                    Esqueceu sua senha?
+                  </button>
+                </div>
                 </div>
                 <button
                   type="submit"
@@ -203,8 +230,8 @@ const handleGoogleSignIn = async () => {
             </div>
           </div>
         </div>
+        <Footer />
       </section>
-      <Footer />
     </div>
   );
 };

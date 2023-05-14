@@ -263,7 +263,7 @@ const handleSubmit = async (e) => {
         setTimeout(() => {
           setSuccessMessage(false);
           router.push('/cliente');
-        }, 3000);
+        }, 1000);
       } else {
         setLoading(false);
       }

@@ -137,6 +137,7 @@ const Cadastrar = () => {
     if (step === 2) {
       // Validação do nome
       if (formData.name === '') {
+        setLoading(false);
         setFormData((prevData) => ({ ...prevData, nameError: 'Por favor, insira seu nome completo.' }));
         isValid = false;
       } else {
@@ -145,6 +146,7 @@ const Cadastrar = () => {
   
       // Validação do telefone
       if (formData.phone === '' || !isValidPhone(formData.phone)) {
+        setLoading(false);
         setFormData((prevData) => ({ ...prevData, phoneError: 'Por favor, insira um número de telefone válido.' }));
         isValid = false;
       } else {
@@ -153,6 +155,7 @@ const Cadastrar = () => {
   
       // Validação da data de nascimento
       if (formData.birthdate === '') {
+        setLoading(false);
         setFormData((prevData) => ({ ...prevData, birthdateError: 'Por favor, insira sua data de nascimento.' }));
         isValid = false;
       } else {
@@ -161,6 +164,7 @@ const Cadastrar = () => {
   
       // Validação da cidade
       if (formData.city === '') {
+        setLoading(false);
         setFormData((prevData) => ({ ...prevData, cityError: 'Por favor, insira sua cidade.' }));
         isValid = false;
       } else {

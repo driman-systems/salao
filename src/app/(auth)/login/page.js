@@ -229,8 +229,8 @@ const handleGoogleSignIn = async () => {
               )}
             </div>
           </div>
+          <Footer />
         </div>
-        <Footer />
       </section>
     </div>
   );

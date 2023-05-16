@@ -5,7 +5,7 @@ import { FiEye, FiEyeOff } from 'react-icons/fi';
 import Image from "next/image";
 import Footer from "@/components/Footer";
 import { auth, provider } from "@/config/Firebase";
-import { signInWithPopup, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { signInWithPopup, createUserWithEmailAndPassword, updateProfile, fetchSignInMethodsForEmail } from "firebase/auth";
 import { useSearchParams, useRouter } from "next/navigation";
 import { getFirestore, collection, doc, setDoc, getDocs, query, where } from "firebase/firestore";
 
@@ -65,19 +65,24 @@ const Cadastrar = () => {
     return formattedValue;
   };  
   
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-  
-    if (name === "phone") {
-      setFormData({ ...formData, [name]: formatPhone(value) });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
+ const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  // Limpa o erro específico para o campo que está sendo alterado
+  const errorField = name + 'Error'; 
+  setFormData(prevData => ({
+    ...prevData,
+    [name]: value,
+    [errorField]: ''
+  }));
 
-  const handleNextStep = (e) => {
+  if (name === "phone") {
+    setFormData({ ...formData, [name]: formatPhone(value) });
+  }
+};
+
+  const handleNextStep = async (e) => {
     e.preventDefault();
-    if (validateFields()) {
+    if (await validateFields()) {
       setStep((prevStep) => prevStep + 1);
     }
   };
@@ -103,17 +108,30 @@ const Cadastrar = () => {
     return passwordRegex.test(password);
   };
 
-  const validateFields = () => {
+  const checkIfEmailExists = async (email) => {
+    const userQuery = query(collection(firestore, 'users'), where('email', '==', email));
+    const querySnapshot = await getDocs(userQuery);
+  
+    return !querySnapshot.empty;
+  };
+
+  const validateFields = async() => {
     let isValid = true;
   
     // Etapa 1
     if (step === 1 && !isGoogleSignUp) { // Adicione a condição !isGoogleSignUp aqui
-      // Validação de e-mail
+    
       if (formData.email === '' || !isValidEmail(formData.email)) {
         setFormData((prevData) => ({ ...prevData, emailError: 'Por favor, insira um e-mail válido.' }));
         isValid = false;
       } else {
-        setFormData((prevData) => ({ ...prevData, emailError: '' }));
+        const emailExists = await checkIfEmailExists(formData.email);
+        if(emailExists) {
+          setFormData((prevData) =>  ({ ...prevData, emailError: 'Este e-mail já está em uso.' }));
+          isValid = false;
+        } else {
+          setFormData((prevData) => ({ ...prevData, emailError: '' }));
+        }
       }
   
       // Validação de senha
@@ -174,13 +192,6 @@ const Cadastrar = () => {
   
     return isValid;
   };
-
-  const checkIfEmailExists = async (email) => {
-    const userQuery = query(collection(firestore, 'users'), where('email', '==', email));
-    const querySnapshot = await getDocs(userQuery);
-  
-    return !querySnapshot.empty;
-  };
   
 const handleGoogleSignIn = async (e) => {
   e.preventDefault();
@@ -236,19 +247,14 @@ const handleSubmit = async (e) => {
           });
         }
       } else {
-        if (emailExists) {
-          // Se o email já existe, retornar um erro
-          setError('Este e-mail já está cadastrado em nosso sistema.');
-        } else {
           // Cadastrar usuário com e-mail e senha
-          const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-          user = userCredential.user;
-          await updateProfile(user, {
-            displayName: formData.name,
-            phoneNumber: formData.phone,
-          });
+         const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+            user = userCredential.user;
+            await updateProfile(user, {
+              displayName: formData.name,
+              phoneNumber: formData.phone,
+            });
         }
-      }
 
       if (user) {
         // Salvar informações adicionais do usuário no Firestore
@@ -290,9 +296,10 @@ const handleSubmit = async (e) => {
               <h1 className="text-md font-bold leading-tight tracking-tight text-[#AF1B51] md:text-2xl">
                 Cadastro
               </h1>
-              <form className="space-y-2 md:space-y-4" onSubmit={handleSubmit}>
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 {step === 1 && (
                   <>
+                  {/*  Email */}
                     <div className="relative">
                       <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Seu e-mail</label>
                       <div className="flex items-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus-within:border-[#AF1B51] focus:border-4 w-full">
@@ -309,7 +316,7 @@ const handleSubmit = async (e) => {
                       {formData.emailError && <p className="mt-1 text-sm text-red-600">{formData.emailError}</p>}
                       {error !== null && <div className="text-red-600 mt-1 text-center">{error}</div>}
                     </div>
-
+                  {/*  Senha */}
                     <div className="relative">
                       <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Senha</label>
                       <div className="flex items-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus-within:border-[#AF1B51] focus:border-4 w-full">
@@ -339,7 +346,7 @@ const handleSubmit = async (e) => {
                       )}
                       {formData.passwordError && <p className="mt-1 text-sm text-red-600">{formData.passwordError}</p>}
                     </div>
-
+                  {/*  Confirma senha */}
                     <div className="relative">
                       <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-gray-900">Confirmar senha</label>
                       <div className="flex items-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus-within:border-[#AF1B51] focus:border-4 w-full">
@@ -382,6 +389,7 @@ const handleSubmit = async (e) => {
 
                 {step === 2 && (
                   <>
+                  {/*  Nome */}
                     <div className="relative">
                       <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Nome completo</label>
                       <div className="flex items-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus-within:border-[#AF1B51] focus:border-4 w-full">
@@ -397,7 +405,7 @@ const handleSubmit = async (e) => {
                       </div>
                       {formData.nameError && <p className="mt-1 text-sm text-red-600">{formData.nameError}</p>}
                     </div>
-
+                  {/*  Telefone */}
                     <div className="relative">
                       <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900">Telefone</label>
                       <div className="flex items-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus-within:border-[#AF1B51] focus:border-4 w-full">
@@ -413,7 +421,7 @@ const handleSubmit = async (e) => {
                       </div>
                       {formData.phoneError && <p className="mt-1 text-sm text-red-600">{formData.phoneError}</p>}
                     </div>
-
+                  {/*  Data de nascimento */}
                     <div className="relative">
                       <label htmlFor="birthdate" className="block mb-2 text-sm font-medium text-gray-900">Data de nascimento</label>
                       <div className="flex items-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus-within:border-[#AF1B51] focus:border-4 w-full">
@@ -428,7 +436,7 @@ const handleSubmit = async (e) => {
                       </div>
                       {formData.birthdateError && <p className="mt-1 text-sm text-red-600">{formData.birthdateError}</p>}
                     </div>
-
+                  {/*  Cidade */}
                     <div className="relative">
                       <label htmlFor="city" className="block mb-2 text-sm font-medium text-gray-900">Cidade</label>
                       <div className="flex items-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus-within:border-[#AF1B51] focus:border-4 w-full">
